@@ -33,6 +33,12 @@ jobs:
 
       - name: Build Podman image
         run: podman build -t ${{ secrets.AWS_REGISTRY_URL }}/poc-demo-app:latest .
+      - name: Optimize Docker image
+        run: |
+            podman run --rm --entrypoint /bin/sh ${{ secrets.AWS_REGISTRY_URL }}/poc-demo-app:optimized -c "du -sh /app"
+            podman run --rm ${{ secrets.AWS_REGISTRY_URL }}/poc-demo-app:optimized
+            podman commit $(podman ps -lq) ${{ secrets.AWS_REGISTRY_URL }}/poc-demo-app:final
+            podman tag ${{ secrets.AWS_REGISTRY_URL }}/poc-demo-app:final ${{ secrets.AWS_REGISTRY_URL }}/poc-demo-app:latest
 
       - name: Authenticate with Amazon ECR
         run: |
