@@ -1,47 +1,47 @@
-name: Build on DockerHub and Deploy to AWS
+# name: Build on DockerHub and Deploy to AWS
 
-on:
-  push:
-    branches:
-      - master
+# on:
+#   push:
+#     branches:
+#       - master
 
-jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
+# jobs:
+#   build:
+#     runs-on: ubuntu-latest
+#     steps:
+#       - name: Checkout code
+#         uses: actions/checkout@v2
 
-      - name: Set up JDK
-        uses: actions/setup-java@v2
-        with:
-          distribution: 'adopt'
-          java-version: '17'
+#       - name: Set up JDK
+#         uses: actions/setup-java@v2
+#         with:
+#           distribution: 'adopt'
+#           java-version: '17'
 
-      - name: Build with Maven
-        run: mvn clean install
+#       - name: Build with Maven
+#         run: mvn clean install
 
-      - name: Run tests
-        run: mvn test
+#       - name: Run tests
+#         run: mvn test
 
-      - name: Build Podman image
-        run: podman build -t docker.io/priyanshu789/poc-demo-app:latest .
+#       - name: Build Podman image
+#         run: podman build -t docker.io/priyanshu789/poc-demo-app:latest .
 
-      - name: Log in to Docker Hub (if needed)
-        run: echo ${{ secrets.DOCKER_PASSWORD }} | podman login -u ${{ secrets.DOCKER_USERNAME }} --password-stdin
+#       - name: Log in to Docker Hub (if needed)
+#         run: echo ${{ secrets.DOCKER_PASSWORD }} | podman login -u ${{ secrets.DOCKER_USERNAME }} --password-stdin
 
-      - name: Push Podman image
-        run: podman push docker.io/priyanshu789/poc-demo-app:latest
+#       - name: Push Podman image
+#         run: podman push docker.io/priyanshu789/poc-demo-app:latest
 
-      - name: deploy to ec2 instance
-        uses: appleboy/ssh-action@master
-        with:
-          host: ${{ secrets.EC2_HOST }}
-          username: ${{ secrets.EC2_USERNAME }}
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
-          port: ${{ secrets.EC2_SSH_PORT }}
-          script: |
-            podman stop poc-demo-app
-            podman rm poc-demo-app
-            podman pull docker.io/priyanshu789/poc-demo-app:latest
-            podman run -d --name poc-demo-app -p 8081:8081 docker.io/priyanshu789/poc-demo-app:latest
+#       - name: deploy to ec2 instance
+#         uses: appleboy/ssh-action@master
+#         with:
+#           host: ${{ secrets.EC2_HOST }}
+#           username: ${{ secrets.EC2_USERNAME }}
+#           key: ${{ secrets.SSH_PRIVATE_KEY }}
+#           port: ${{ secrets.EC2_SSH_PORT }}
+#           script: |
+#             podman stop poc-demo-app
+#             podman rm poc-demo-app
+#             podman pull docker.io/priyanshu789/poc-demo-app:latest
+#             podman run -d --name poc-demo-app -p 8081:8081 docker.io/priyanshu789/poc-demo-app:latest
