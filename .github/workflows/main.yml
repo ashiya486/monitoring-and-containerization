@@ -42,8 +42,8 @@ jobs:
             key: ${{ secrets.SSH_PRIVATE_KEY }}
             port: ${{ secrets.EC2_SSH_PORT }}
             script: |
-              podman stop your-container-name
-              podman rm your-container-name
+              podman stop poc-demo-app
+              podman rm poc-demo-app
               podman pull docker.io/priyanshu789/poc-demo-app:latest
               podman run -d --name poc-demo-app -p 8081:8081 docker.io/priyanshu789/poc-demo-app:latest
 
