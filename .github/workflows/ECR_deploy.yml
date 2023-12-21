@@ -54,4 +54,4 @@ jobs:
             podman rm poc-demo-app
             aws ecr get-login-password --region ${{ secrets.AWS_REGION }} | podman login --username AWS --password-stdin ${{ secrets.AWS_REGISTRY_URL }}
             podman pull ${{ secrets.AWS_REGISTRY_URL }}/poc-demo-app:latest
-            podman run -d --name poc-demo-app -p 8081:8081 -v $(pwd)/logs:/app/logs ${{ secrets.AWS_REGISTRY_URL }}/poc-demo-app:latest
+            podman run -d --name poc-demo-app -p 8081:8081 -v logs:/app/logs ${{ secrets.AWS_REGISTRY_URL }}/poc-demo-app:latest
