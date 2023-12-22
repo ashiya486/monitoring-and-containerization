@@ -48,5 +48,6 @@
            script: |
              podman stop poc-demo-app
              podman rm poc-demo-app
+             podman rmi poc-demo-app
              podman pull docker.io/priyanshu789/poc-demo-app:latest
              podman run -d --name poc-demo-app -p 8081:8081 docker.io/priyanshu789/poc-demo-app:latest
