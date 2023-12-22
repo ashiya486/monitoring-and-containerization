@@ -9,7 +9,7 @@ public class HelloController {
     @RequestMapping(method = RequestMethod.GET, value = "/api/pocgic")
     public String sayHello() {
 
-        return " Welcome user -- I am here to give you a short POC of EKS for GIC ";
+        return " Welcome  -- I am here to give you a short POC of EKS for GIC ";
 
     }
 
