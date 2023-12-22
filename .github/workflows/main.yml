@@ -50,4 +50,4 @@
              podman rm poc-demo-app
              podman rmi poc-demo-app
              podman pull docker.io/priyanshu789/poc-demo-app:latest
-             podman run -d --name poc-demo-app -p 8081:8081 docker.io/priyanshu789/poc-demo-app:latest
+             podman run -d -p 8081:8081 --name poc-demo-app -v logstash_shared:/logs docker.io/priyanshu789poc-demo-app:latest
