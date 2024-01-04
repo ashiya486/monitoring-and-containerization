@@ -10,7 +10,7 @@ public class HelloController {
     @RequestMapping(method = RequestMethod.GET, value = "/api/pocgic")
     public String sayHello() {
             log.info("generating welcome message");
-        return " Welcome  -- I am here to give you a short POC of EKS for GIC ";
+        return " Welcome priyanshu -- I am here to give you a short POC of EKS for GIC ";
 
     }
 
